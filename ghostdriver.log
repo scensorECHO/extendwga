@@ -1,0 +1,24 @@
+[INFO  - 2015-05-07T20:17:49.472Z] GhostDriver - Main - running on port 15233
+[INFO  - 2015-05-07T20:17:50.155Z] Session [223a5d60-f4f6-11e4-b91f-b39adc8473ac] - page.settings - {"XSSAuditingEnabled":false,"javascriptCanCloseWindows":true,"javascriptCanOpenWindows":true,"javascriptEnabled":true,"loadImages":true,"localToRemoteUrlAccessEnabled":false,"userAgent":"Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/538.1 (KHTML, like Gecko) PhantomJS/2.0.0 Safari/538.1","webSecurityEnabled":true}
+[INFO  - 2015-05-07T20:17:50.156Z] Session [223a5d60-f4f6-11e4-b91f-b39adc8473ac] - page.customHeaders:  - {}
+[INFO  - 2015-05-07T20:17:50.156Z] Session [223a5d60-f4f6-11e4-b91f-b39adc8473ac] - Session.negotiatedCapabilities - {"browserName":"phantomjs","version":"2.0.0","driverName":"ghostdriver","driverVersion":"1.2.0","platform":"windows-7-32bit","javascriptEnabled":true,"takesScreenshot":true,"handlesAlerts":false,"databaseEnabled":false,"locationContextEnabled":false,"applicationCacheEnabled":false,"browserConnectionEnabled":false,"cssSelectorsEnabled":true,"webStorageEnabled":false,"rotatable":false,"acceptSslCerts":false,"nativeEvents":true,"proxy":{"proxyType":"direct"}}
+[INFO  - 2015-05-07T20:17:50.156Z] SessionManagerReqHand - _postNewSessionCommand - New Session Created: 223a5d60-f4f6-11e4-b91f-b39adc8473ac
+[ERROR - 2015-05-07T20:17:56.325Z] Session [223a5d60-f4f6-11e4-b91f-b39adc8473ac] - page.onError - msg: TypeError: null is not an object (evaluating 'obj.value = "1"')
+
+  :262 in error
+[ERROR - 2015-05-07T20:17:56.326Z] Session [223a5d60-f4f6-11e4-b91f-b39adc8473ac] - page.onError - stack:
+  loginCheck (https://visitorportal.benteler.net:8443/sponsorportal/login.js:10)
+  (anonymous function) (https://visitorportal.benteler.net:8443/sponsorportal/login.js:36)
+  dispatch (https://visitorportal.benteler.net:8443/sponsorportal/js/lib/require-jquery.min.js:110)
+  k (https://visitorportal.benteler.net:8443/sponsorportal/js/lib/require-jquery.min.js:102)
+  dispatchEvent (:0)
+  U (phantomjs://webpage.evaluate():119)
+  $ (phantomjs://webpage.evaluate():108)
+  $ (phantomjs://webpage.evaluate():101)
+  gh (phantomjs://webpage.evaluate():141)
+  sh (phantomjs://webpage.evaluate():152)
+  (anonymous function) (phantomjs://webpage.evaluate():152)
+  (anonymous function) (phantomjs://webpage.evaluate():152)
+  (anonymous function) (phantomjs://webpage.evaluate():153)
+
+  :262 in error
