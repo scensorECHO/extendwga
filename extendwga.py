@@ -1,4 +1,4 @@
-# This application extends the WGA account for Naveed Choudry
+# This application extends the WGA account for users with a provided credentials file, semicolon delimited
 
 
 from selenium import webdriver
@@ -26,7 +26,7 @@ with open('emails','r') as e:
 
 def waitForPageById(element, seconds=15):
 	try:
-		element = WebDriverWait(browser, seconds).until(
+		wait = WebDriverWait(browser, seconds).until(
 			EC.presence_of_element_located((By.ID, element))
 		)
 		return 1;
@@ -82,7 +82,7 @@ def addUser(contactInfo):
 	validityForm.send_keys('5')
 	timeZone.clear()
 	timeZone.send_keys('GMT')
-	time.sleep(.25)
+	time.sleep(.25) # page loads matches to GMT and can miss the space key, delayed to avoid mistype
 	timeZone.send_keys(' -05:00 EST')
 	# browser.executeScript("document.getElementsByName('guestUser.timezone').item(0).value ='GMT -05:00 EST');")
 	time.sleep(1)
