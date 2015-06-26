@@ -1,5 +1,8 @@
 # This application extends the WGA account for the given semicolon delimited credentials
 
+# requirements:
+# selenium version: 2.45.0
+# python version: 2.7.9
 
 from selenium import webdriver
 from selenium.webdriver.common.keys import Keys
