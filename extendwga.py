@@ -61,9 +61,9 @@ def waitForPageById(element, seconds=15):
 		element = WebDriverWait(browser, seconds).until(
 			EC.presence_of_element_located((By.ID, element))
 		)
-		return 1;
+		return 1
 	except:
-		return 0;
+		return 0
 
 def loadManagementPortal():
 
@@ -82,21 +82,21 @@ def loadManagementPortal():
 	loginbutton = browser.find_element_by_id('loginpage.button.login')
 	loginbutton.click() 
 
-	return 1;
+	return 1
 
 def queryUser(contactInfo):
 	# search for user
 	usernamefield = browser.find_element_by_id('searchUserNametxt')
 	usernamefield.send_keys(contactInfo[0])
 	usernamefield.send_keys(Keys.RETURN)
-	return 1;
+	return 1
 
 def addUser(contactInfo):
 	continue_link = browser.find_element_by_partial_link_text('Create Single Acco')
 	continue_link.click()
 
 	if not waitForPageById('guestUserFirstName'):
-		return 0; 
+		return 0
 
 	# retrieve form elements
 	forenameForm = browser.find_element_by_id('guestUserFirstName')
@@ -135,12 +135,12 @@ def addUser(contactInfo):
 	browser.find_element_by_id('viewGuestAccountCancel').click()
 
 	# end account creation function
-	return 1;
+	return 1
 
 def findUserInPage(contactInfo):
 	usercheckbox = browser.find_element_by_xpath('//tr[@id="'+contactInfo[0]+'"]/td/input')
 	usercheckbox.click()
-	return 1;
+	return 1
 
 def extendAccount():
 	# change account duration to 5 days
@@ -157,7 +157,7 @@ def extendAccount():
 	# confirm selection
 	confirmbtn = browser.find_element_by_id('OK')
 	confirmbtn.click()
-	return 1;
+	return 1
 
 
 if not loadManagementPortal():
@@ -186,9 +186,9 @@ for email in emails:
 		findUserInPage(contactInfo)
 		log.append('User found')
 	except:
-	 	if not addUser(contactInfo):
-	 		continue
-	 	log.append('User added to system')
+		if not addUser(contactInfo):
+			continue
+		log.append('User added to system')
 		continue
 
 	time.sleep(1)
@@ -199,5 +199,5 @@ for email in emails:
 
 # exit browser
 time.sleep(1)
-active = 0
+active = 0 # closes log thread
 browser.quit()
