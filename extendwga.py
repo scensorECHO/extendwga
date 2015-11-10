@@ -51,6 +51,7 @@ manage = "https://visitorportal.benteler.net:8443/sponsorportal/LoginSubmit.acti
 
 # browser = webdriver.Firefox()
 browser = webdriver.PhantomJS(service_args=['--ignore-ssl-errors=true'])
+browser.set_window_size(1920,1080)
 # browser = webdriver.PhantomJS()
 
 with open('/root/dl/xwga/credentials','r') as c:
@@ -87,11 +88,16 @@ def loadManagementPortal():
 	loginbutton = browser.find_element_by_id('ui_login_signon_button')
 	loginbutton.click() 
 
+	waitForPageById('availableGuestTypes')
+
 	return 1;
 
 def queryUser(contactInfo):
 	# browser.get(manage)
-	manageAccounts = browser.find_element_by_xpath('//a[@href="#manageAccountsList"]')
+	# manageAccounts = browser.find_element_by_xpath('//a[@href="#manageAccountsList"]')
+	# manageAccounts = browser.find_element_by_xpath(
+	#	'//li[@class="ui-block-b"]/a[@class="ui_manage_accounts_button ui-btn ui-btn-inline ui-btn-up-a ui-btn-active"]')
+	manageAccounts = browser.find_element_by_partial_link_text('Manage Accounts')
 	manageAccounts.click()
 	time.sleep(1)
 	# search for user
@@ -99,8 +105,10 @@ def queryUser(contactInfo):
 	# for u in usernamefield:
 	# 	print(u)
 	usernamefield = browser.find_element_by_xpath('//table[@class="search-container"]/tbody/tr/td/div/input')
-	usernamefield[2].send_keys(contactInfo[0])
-	usernamefield[2].send_keys(Keys.RETURN)
+	usernamefield.click()
+	browser.save_screenshot("loggedin.png")
+	usernamefield.send_keys(contactInfo[0])
+	usernamefield.send_keys(Keys.RETURN)
 	return 1;
 
 def addUser(contactInfo):
