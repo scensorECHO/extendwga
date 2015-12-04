@@ -39,7 +39,7 @@ t.start()
 
 login = []
 email = []
-
+IWT=5 # IMPLICIT WAIT TIME
 
 log.append('###Loading Selenium WebDriver###')
 
@@ -51,7 +51,7 @@ manage = "https://visitorportal.benteler.net:8443/sponsorportal/LoginSubmit.acti
 browser = webdriver.PhantomJS(service_args=['--ignore-ssl-errors=true'])
 browser.set_window_size(1920,1080)
 # browser = webdriver.PhantomJS()
-browser.implicitly_wait(5)
+browser.implicitly_wait(IWT)
 
 # '/root/dl/xwga/credentials'
 with open('credentials','r') as c:
@@ -68,9 +68,27 @@ def waitForPageById(element, seconds=15):
 		element = WebDriverWait(browser, seconds).until(
 			EC.presence_of_element_located((By.ID, element))
 		)
-		return 1;
+		return 1
 	except:
-		return 0;
+		return 0
+
+def waitForPageByXpath(xpath, seconds=15):
+	try:
+		browser.implicitly_wait(seconds)
+		browser.find_element_by_xpath(xpath)
+	except:
+		raise
+	finally:
+		browser.implicitly_wait(IWT)
+
+def waitForPageByPartialLinkText(ptext, seconds=15):
+	try:
+		browser.implicitly_wait(seconds)
+		browser.find_element_by_partial_link_text(ptext)
+	except:
+		raise
+	finally:
+		browser.implicitly_wait(IWT)
 
 def loadManagementPortal():
 
@@ -95,9 +113,23 @@ def loadManagementPortal():
 
 def queryUser(contactInfo):
 	time.sleep(5)
-	manageAccounts = browser.find_element_by_partial_link_text('Manage Accounts')
-	manageAccounts.click()
-	time.sleep(2)
+	acc_attempts=0
+	while(acc_attempts<5):
+		manageAccounts = browser.find_element_by_partial_link_text('Manage Accounts')
+		manageAccounts.click()
+		if(waitForPageByXpath('//table[@class="search-container"]/tbody/tr/td/div/input',20)):
+			break
+		elif(acc_attempts==2):
+			browser.refresh()
+			log.append('3rd attempt, refreshing page')
+			acc_attempts+=1
+		elif(acc_attempts==4):
+			log.append('5 attempts to load manage account page failed -- exiting')
+			browser.save_screenshot('manage_account_error.png')
+			return 0
+		else:
+			acc_attempts+=1
+	
 	# search for user
 	# usernamefield = browser.find_elements_by_name('search')
 	# for u in usernamefield:
@@ -105,6 +137,7 @@ def queryUser(contactInfo):
 	
 	# testing new username xpath
 	usernamefield = browser.find_element_by_xpath('//table[@class="search-container"]/tbody/tr/td/div/input')
+	browser.save_screenshot("username_field.png")
 	usernamefield.clear()
 
 	# try:
@@ -215,7 +248,13 @@ def findUserInPage(contactInfo):
 
 def extendAccount():
 	# wait for page load
-	time.sleep(2)
+	try:
+		waitForPageByXpath('//div[@class="ui-body-b summary_field"]/span[@class="summary_field_name"]')
+	except Exception as detail:
+		log.append('User page did not load:\n'+str(detail))
+		browser.save_screenshot("extend_account_error.png")
+		return 0
+	# time.sleep(2)
 	editButton = browser.find_element_by_partial_link_text("Edit")
 	editButton.click()
 
