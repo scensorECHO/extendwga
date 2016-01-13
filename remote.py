@@ -1,4 +1,5 @@
 # extendwga remote webdriver 
+# no longer necessary since dedicated server setup
 
 from selenium import webdriver
 from selenium.webdriver.common.desired_capabilities import DesiredCapabilities
